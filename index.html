@@ -36,8 +36,8 @@
   /* glitch on individual spans — color shift + tiny translate, no opacity drop */
   .glitch {
     display: inline-block;
-    animation: glitch 0.2s infinite;
-    color: #ff3a3a;
+    will-change: transform;
+    animation: glitch 0.2s linear infinite;
   }
   @keyframes glitch {
     0%   { transform: translate(0,0) skewX(0deg);   color: #ff3a3a; }
@@ -51,12 +51,15 @@
   /* shake on individual spans */
   .shake {
     display: inline-block;
-    animation: shk 0.13s infinite;
+    will-change: transform;
+    animation: shk 0.13s linear infinite;
   }
   @keyframes shk {
-    0%,100% { transform: translate(0,0); }
-    25%     { transform: translate(1px,-1px); }
-    75%     { transform: translate(-1px,1px); }
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(2px, -2px); }
+    50%  { transform: translate(-2px, 2px); }
+    75%  { transform: translate(2px, 2px); }
+    100% { transform: translate(0, 0); }
   }
 
   /* smug box — border pulse only, no brightness/opacity change on the text */
@@ -70,11 +73,12 @@
     padding: 8px 14px;
     margin: 10px 0;
     letter-spacing: 0.03em;
-    animation: smugpulse 2.4s ease-in-out infinite;
+    will-change: border-color, color;
+    animation: smugpulse 2.4s linear infinite;
   }
   @keyframes smugpulse {
-    0%,100% { box-shadow: 0 0 0px 0px #ff69b422; }
-    50%     { box-shadow: 0 0 18px 2px #ff69b466; }
+    0%,100% { border-color: #ff69b4; color: #ff69b4; }
+    50%     { border-color: #ff00cc; color: #ff00cc; }
   }
 </style>
 </head>
@@ -203,6 +207,21 @@
 <p class="red">██ <span class="white blink">END OF RECOVERABLE BARRIER LOG OUTPUT</span> <span class="corrupt">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span> ██</p>
 <p class="red">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</p>
 <p class="dim" style="margin-top:6px; font-size:10px; text-align:right;">— log output terminated by Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜ — barrier recovery ops offline — contact Khalmyr — <span class="blink">_</span></p>
+
+<script>
+  const lines = document.querySelectorAll('body > *');
+  lines.forEach(el => el.style.visibility = 'hidden');
+
+  let i = 0;
+  function reveal() {
+    if (i < lines.length) {
+      lines[i].style.visibility = 'visible';
+      i++;
+      setTimeout(reveal, 180); // milliseconds between each line
+    }
+  }
+  reveal();
+</script>
 
 </body>
 </html>
