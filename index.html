@@ -21,6 +21,45 @@
   .white { color: #ffffff; }
   .gray { color: #777; }
   .dim { color: #3a5c3a; }
+  .corrupt { font-size: 11px; color: #555; letter-spacing: -0.3px; }
+  .hr { border: none; border-top: 1px solid #1e3e1e; margin: 8px 0; }
+  .indent { padding-left: 20px; }
+  p { margin: 1px 0; }
+  .redact  { background: #c8ffc8; color: #c8ffc8; padding: 0 2px; font-size: 11px; }
+  .redact2 { background: #ff3a3a; color: #ff3a3a; padding: 0 2px; font-size: 11px; }
+  .redact3 { background: #ffff00; color: #ffff00; padding: 0 2px; font-size: 11px; }
+
+  /* cursor blink only */
+  .blink { animation: blink 1.2s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* glitch on individual spans — color shift + tiny translate, no opacity drop */
+  .glitch {
+    display: inline-block;
+    animation: glitch 0.2s infinite;
+    color: #ff3a3a;
+  }
+  @keyframes glitch {
+    0%   { transform: translate(0,0) skewX(0deg);   color: #ff3a3a; }
+    20%  { transform: translate(-2px,1px) skewX(-3deg); color: #40f0f0; }
+    40%  { transform: translate(2px,-1px) skewX(2deg);  color: #ff3a3a; }
+    60%  { transform: translate(-1px,2px) skewX(1deg);  color: #ffff00; }
+    80%  { transform: translate(1px,0px) skewX(-1deg);  color: #ff3a3a; }
+    100% { transform: translate(0,0) skewX(0deg);   color: #ff3a3a; }
+  }
+
+  /* shake on individual spans */
+  .shake {
+    display: inline-block;
+    animation: shk 0.13s infinite;
+  }
+  @keyframes shk {
+    0%,100% { transform: translate(0,0); }
+    25%     { transform: translate(1px,-1px); }
+    75%     { transform: translate(-1px,1px); }
+  }
+
+  /* smug box — border pulse only, no brightness/opacity change on the text */
   .smug {
     color: #ff69b4;
     font-size: 13.5px;
@@ -31,22 +70,18 @@
     padding: 8px 14px;
     margin: 10px 0;
     letter-spacing: 0.03em;
+    animation: smugpulse 2.4s ease-in-out infinite;
   }
-  .corrupt { font-size: 11px; color: #555; letter-spacing: -0.3px; }
-  .hr { border: none; border-top: 1px solid #1e3e1e; margin: 8px 0; }
-  .indent { padding-left: 20px; }
-  p { margin: 1px 0; }
-  .redact  { background: #c8ffc8; color: #c8ffc8; padding: 0 2px; font-size: 11px; }
-  .redact2 { background: #ff3a3a; color: #ff3a3a; padding: 0 2px; font-size: 11px; }
-  .redact3 { background: #ffff00; color: #ffff00; padding: 0 2px; font-size: 11px; }
-  .blink { animation: blink 1.2s step-end infinite; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  @keyframes smugpulse {
+    0%,100% { box-shadow: 0 0 0px 0px #ff69b422; }
+    50%     { box-shadow: 0 0 18px 2px #ff69b466; }
+  }
 </style>
 </head>
 <body>
 
 <p class="red">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</p>
-<p class="red">██ <span class="white">WORLD BARRIER — CRITICAL STRUCTURAL FAILURE</span> :: <span class="red">DIVINE CONTAINMENT BREACH DETECTED</span> ██</p>
+<p class="red">██ <span class="white">WORLD BARRIER — CRITICAL STRUCTURAL FAILURE</span> :: <span class="glitch">DIVINE CONTAINMENT BREACH DETECTED</span> ██</p>
 <p class="red">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</p>
 <br>
 <p class="gray">[ BARRIER TIMESTAMP  ] <span class="yellow">AGE VII :: EPOCH 3 :: CYCLE 14 :: TICK 00:47:22.0041</span> <span class="corrupt">▒▒░░▒░▒</span></p>
@@ -57,7 +92,7 @@
 <p class="gray">[ UPTIME             ] <span class="white">7 Ages, 3 Epochs, 14 Cycles, 22 Ticks</span> <span class="red">→ SEAL FAILING</span></p>
 <br>
 <hr class="hr">
-<p class="orange">!! INTRUSION EVENT LOG — MODULE: barrier/core/divine_seal.wrd [LINE: ???] !!</p>
+<p class="orange">!! INTRUSION EVENT LOG — MODULE: barrier/core/divine_seal.wrd [LINE: <span class="glitch">???</span>] !!</p>
 <hr class="hr">
 <br>
 <p class="red">  [ERR 0xDEADC0DE] Unexpected chaotic payload injected into the Seal's ley-line lattice at node <span class="white">0x7FFE<span class="corrupt">╗╗╗</span>4B21</span></p>
@@ -67,31 +102,31 @@
 <p class="dim indent">[   ] /strata/outer/void_membrane.wrd  →  <span class="red">DISSOLVED</span></p>
 <p class="dim indent">[   ] /strata/inner/chaos_dampener.wrd  →  <span class="red">OVERWRITTEN BY ENTROPY</span></p>
 <p class="dim indent">[   ] /strata/core/khalmyr_sigil.wrd  →  <span class="red">PARTIALLY ERODED</span></p>
-<p class="dim indent">[   ] /strata/core/<span class="white">???</span>.wrd  →  <span class="red">CORRUPTED BEYOND RECOGNITION</span></p>
+<p class="dim indent">[   ] /strata/core/<span class="glitch">?????????</span>.wrd  →  <span class="red">CORRUPTED BEYOND RECOGNITION</span></p>
 <br>
-<p class="red">  [ERR 0xFF0000AA] Chaos resonance cascade — pattern match depth: <span class="white">INFINITE_LOOP</span></p>
-<p class="red">  [ERR 0xFF0000AA] Khalmyr's binding oath stack smashed — return address overwritten by entity: <span class="white">Nimb</span></p>
-<p class="red">  [ERR 0xFF0000AA] Divine edict pointer now redirected → 0x4141414141414141 <span class="corrupt">(MEANINGLESS TO ORDERED REALITY)</span></p>
+<p class="red">  [ERR 0xFF0000AA] Chaos resonance cascade — pattern match depth: <span class="blink">INFINITE_LOOP</span></p>
+<p class="red">  [ERR 0xFF0000AA] Khalmyr's binding oath stack smashed — return address overwritten by entity: <span class="white shake">NIMB</span></p>
+<p class="red">  [ERR 0xFF0000AA] Divine edict pointer now redirected → <span class="shake">0x4141414141414141</span> <span class="corrupt">(MEANINGLESS TO ORDERED REALITY)</span></p>
 <p class="corrupt">&lt;!-- ▒▒▒░░▒▒▒░░░▒▒░▒░░░▒▒░▒░░▒░▒░░░░▒░▒▒░▒░▒▒▒░░░░▒░▒▒░░▒▒░░▒▒░▒░░▒░░▒░░░░▒▒▒░░▒░░ --&gt;</p>
 <br>
 <p class="yellow">  [WRN 0x00FFBAD1] Planar membrane scan — anomalous divine permission flags detected:</p>
 <p class="indent white">  Layer 0x00000000-0x003FFFFF   [r-x]  <span class="gray">← STABLE (Khalmyr's outer ward)</span></p>
 <p class="indent white">  Layer 0x00400000-0x007FFFFF   [rwx]  <span class="orange">← SUSPICIOUS: CHAOS ENTROPY WRITABLE + EXECUTABLE</span></p>
-<p class="indent white">  Layer 0x00800000-0x<span class="white">???????</span>    [rwx]  <span class="red">← FOREIGN DIVINE PAGE — ENTITY: NIMB — ORIGIN: PRE-CREATION VOID</span></p>
-<p class="indent white">  Layer 0x<span class="corrupt">░░░░░░░░░░░</span>-0x<span class="corrupt">░░░░░░░░░░░</span>  [???]  <span class="red">← UNREADABLE — REALITY PANIC IMMINENT</span></p>
+<p class="indent white">  Layer 0x00800000-0x<span class="glitch">???????</span>    [rwx]  <span class="red">← FOREIGN DIVINE PAGE — ENTITY: NIMB — ORIGIN: PRE-CREATION VOID</span></p>
+<p class="indent white">  Layer 0x<span class="corrupt">░░░░░░░░░░░</span>-0x<span class="corrupt">░░░░░░░░░░░</span>  [<span class="glitch">???</span>]  <span class="red">← UNREADABLE — REALITY PANIC IMMINENT</span></p>
 <br>
-<p class="red">  [ERR 0xC0DEBABE] Nimb's manifestation has spawned <span class="yellow">19</span> chaos fragments — designations: <span class="redact">████ ████ ████ ████ ████ ████ ████</span> (+40 more)</p>
-<p class="red">  [ERR 0xC0DEBABE] All fragments are masking as: <span class="gray">[void_static] [ambient_entropy] [background_noise]</span> — DECOY MANIFESTATION NAMES</p>
-<p class="red">  [ERR 0xC0DEBABE] Chaos pressure: <span class="white">████████████████████</span> 97.3% — BARRIER WALLS THINNING</p>
+<p class="red">  [ERR 0xC0DEBABE] NIMB's manifestation has spawned <span class="yellow">47</span> chaos fragments — designations: <span class="redact">████ ████ ████ ████ ████ ████ ████</span> (+40 more)</p>
+<p class="red">  [ERR 0xC0DEBABE] All fragments masking as: <span class="gray">[void_static] [ambient_entropy] [background_noise]</span> — DECOY MANIFESTATION NAMES</p>
+<p class="red">  [ERR 0xC0DEBABE] Chaos pressure: <span class="blink">████████████████████</span> 97.3% — BARRIER WALLS THINNING</p>
 <p class="yellow">  [WRN 0xABCDEF01] Divine entropy pool drained — Khalmyr's prayer-seed compromised — all sealing ops <span class="red">INVALID</span></p>
 <p class="yellow">  [WRN 0xABCDEF01] Sacred oaths bound to <span class="redact">████████████████████████████</span> revoked or forged by opposing will</p>
 <p class="yellow">  [WRN 0xABCDEF01] Chaos listener module injected into <span class="redact2">████████████</span>_mortal_thought driver — prayers intercepted</p>
 <p class="corrupt">  ░░▒▒░▒░░░░▒▒▒░░▒░░▒░▒▒▒░░░▒░▒▒░▒░░▒▒▒░░▒░░░░▒░▒░░▒▒▒░░░▒▒▒░░░░░▒░▒░░░▒░░▒░░░░░░░</p>
 <br>
-<p class="red">  [ERR 0x0B00B1E5] Void-side exfiltration detected — active Nimb summoning beacon:</p>
+<p class="red">  [ERR 0x0B00B1E5] Void-side exfiltration detected — active NIMB summoning beacon:</p>
 <p class="indent gray">  DST: <span class="redact">████████████</span>:<span class="redact2">████</span>  PROTO: CHAOS_SIGNAL 1.3 (sigil: self-signed, CN=<span class="redact3">████████████████</span>)</p>
-<p class="indent gray">  DIVINE MASS OUT: <span class="red">2,941,847,302 souls-equivalent</span>  <span class="orange">(est. 2.74 AGE-UNITS in last 00:04:11)</span></p>
-<p class="indent gray">  VOID PULSES: <span class="red">8,402,771</span>  INTERVAL: <span class="yellow">47ms avg</span>  CHANNEL: <span class="white">ENCRYPTED_PRIMORDIAL</span></p>
+<p class="indent gray">  DIVINE MASS OUT: <span class="red shake">2,941,847,302 souls-equivalent</span>  <span class="orange">(est. 2.74 AGE-UNITS in last 00:04:11)</span></p>
+<p class="indent gray">  VOID PULSES: <span class="red">8,402,771</span>  INTERVAL: <span class="yellow">47ms avg</span>  CHANNEL: <span class="glitch">ENCRYPTED_PRIMORDIAL</span></p>
 <p class="indent gray">  WARD STATUS: <span class="red">BYPASSED</span>  —  Khalmyr's binding chain <span class="redact">████████</span> unmade and rewritten in chaos script</p>
 <p class="indent gray">  DIVINE WATCHERS: <span class="red">BLINDED</span>  —  celestial observer process found dissolved at cycle 03:43:09</p>
 <br>
@@ -102,14 +137,14 @@
 <p class="indent dim">  /realm/mortals/<span class="redact">████████</span>/souls.wrd      → <span class="red">ACCESSED BY Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜</span></p>
 <p class="indent dim">  /logs/divine/event_history.wrd        → <span class="red">WIPED</span></p>
 <p class="indent dim">  /logs/divine/intervention_record.wrd  → <span class="red">WIPED</span></p>
-<p class="indent dim">  /logs/divine/<span class="corrupt">░░░░░░░░░░░░░░░░</span>.wrd    → <span class="white">STATUS UNKNOWN</span></p>
+<p class="indent dim">  /logs/divine/<span class="corrupt">░░░░░░░░░░░░░░░░</span>.wrd    → <span class="glitch">STATUS UNKNOWN</span></p>
 <p class="indent dim">  /void/Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜/self_proc/mem.wrd          → <span class="red">ACTIVELY REWRITING IN REAL TIME</span></p>
 <p class="indent dim">  /boot/world/genesis_cfg.wrd           → <span class="red">CHAOS ENTRY APPENDED BY Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜</span></p>
 <p class="corrupt">░░░░░▒░▒▒░░▒░░░░░▒░░▒▒░▒▒░▒░░░░▒▒░▒░▒░░░░░░▒░▒░▒░░░░░▒░░░░░░░░▒░░░░▒░░░░░▒░░░░░░</p>
 <br>
 
 <div class="smug">
-&nbsp;&nbsp;≧◡≦  ahahaha~ sua "barreira sagrada eternamente inquebrável feita pelo glorioso Khalmyr" é absolutamente adorável, amorzinho  ✿◕ ‿ ◕✿  &nbsp;&nbsp;(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  — com carinho, Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜  ~★
+&nbsp;&nbsp;≧◡≦  ahahaha~ sua "barreira sagrada eternamente inquebrável feita pelo glorioso Khalmyr" é absolutamente adorável  ✿◕ ‿ ◕✿  &nbsp;&nbsp;(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧  — com carinho, Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜  ~★
 </div>
 
 <br>
@@ -117,24 +152,24 @@
 <p class="indent yellow">  Cycle 03:43:01.114  →  Initial void vector: <span class="redact">████████████████████████████████████████</span></p>
 <p class="indent yellow">  Cycle 03:43:01.887  →  Primordial exploit triggered: <span class="redact2">████████████████████</span> (ANCIENT WOUND REF: PRE-CREATION)</p>
 <p class="indent yellow">  Cycle 03:43:02.230  →  Privileged divine rune abused: /world/<span class="corrupt">░░░░░░░░░░░░░░░░</span>/khalmyr_seal_prime</p>
-<p class="indent yellow">  Cycle 03:43:02.411  →  entity=Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜ rank=CHAOS_GOD_CHILD dominion=EVERYTHING — <span class="red">FULL DIVINE SOVEREIGNTY CLAIMED</span></p>
+<p class="indent yellow">  Cycle 03:43:02.411  →  entity=Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜ rank=CHAOS_GOD_CHILD dominion=EVERYTHING — <span class="red">FULL DIVINE SOVEREIGNTY IMMUNITY</span></p>
 <p class="indent yellow">  Cycle 03:43:02.884  →  Divine order enforcing → collapsing: <span class="red">FORCED</span></p>
 <p class="indent yellow">  Cycle 03:43:03.001  →  Celestial audit subsystem: <span class="red">DISSOLVED INTO VOID</span></p>
 <p class="indent yellow">  Cycle 03:43:03.049  →  Persistence mechanisms installed: <span class="yellow">void anchor / mortal-dream hook / law rewrite / genesis backdoor</span></p>
-<p class="indent yellow">  Cycle 03:43:03.<span class="white">???</span>  →  <span class="redact">████████████████████████████████████████████████████████████</span></p>
+<p class="indent yellow">  Cycle 03:43:03.<span class="glitch">???</span>  →  <span class="redact">████████████████████████████████████████████████████████████</span></p>
 <br>
 <p class="red">  [ERR 0x8BADF00D] World-plane escape attempt — status: <span class="white blink">IN PROGRESS</span></p>
 <p class="red">  [ERR 0x8BADF00D] Planar boundary integrity: <span class="red">UNCERTAIN</span></p>
 <p class="red">  [ERR 0x8BADF00D] Divine hypercall intercept at 0x<span class="corrupt">░░░░░░░░</span> — mortal realm's physical laws being manipulated</p>
 <p class="yellow">  [WRN 0xDEADBEEF] Khalmyr's foundational sigils: <span class="orange">WRITE PROTECTION STRIPPED BY Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜</span></p>
 <p class="yellow">  [WRN 0xDEADBEEF] Sacred Creation Chain: <span class="red">BROKEN</span> — unauthorized chaos-glyph injected at WORLD/GENESIS/PRIME_LAW</p>
-<p class="yellow">  [WRN 0xDEADBEEF] Divine resonance values: <span class="red">MISMATCH</span> — ORDER[0] ORDER[4] ORDER[7] ORDER[11] all <span class="white">INCONSISTENT</span></p>
+<p class="yellow">  [WRN 0xDEADBEEF] Divine resonance values: <span class="red">MISMATCH</span> — ORDER[0] ORDER[4] ORDER[7] ORDER[11] all <span class="glitch">INCONSISTENT</span></p>
 <p class="corrupt">░░░░░░░▒░▒░░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░░▒▒▒░░░░▒░░▒▒░░░░░░░░░░░░░░░░░░░░░░░░░░</p>
 <br>
 <p class="red">  [FATAL 0x00000001] Barrier self-check: <span class="red">FAILED</span></p>
 <p class="red">  [FATAL 0x00000001] Attempting divine snapshot restore… <span class="red">FAILED</span> — Khalmyr's memory index dissolved</p>
 <p class="red">  [FATAL 0x00000001] Attempting emergency realm isolation… <span class="red">FAILED</span> — planar gates rewritten by Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜</p>
-<p class="red">  [FATAL 0x00000001] Attempting void-memory wipe… <span class="red">FAILED</span> — Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜'s will locked all divine DMA channels</p>
+<p class="red">  [FATAL 0x00000001] Attempting void-memory wipe… <span class="red">FAILED</span> — NIMB's will locked all divine DMA channels</p>
 <p class="red">  [FATAL 0x00000001] Attempting to page incident report to <span class="redact">█████████████████</span> (Khalmyr)… <span class="red">FAILED — NO DIVINE SIGNAL</span></p>
 <p class="red">  [FATAL 0x00000001] Attempting to <span class="corrupt">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span></p>
 <p class="red">  [FATAL 0x00000001] Attempting to <span class="corrupt">▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒</span></p>
@@ -148,7 +183,7 @@
 <p class="white">  Sacred Genesis Chain    .............. <span class="red">[ BYPASSED    ]</span></p>
 <p class="white">  Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜ Manifestation      .............. <span class="red">[ ONGOING     ]</span></p>
 <p class="white">  Celestial Response      .............. <span class="red">[ <span class="blink">UNREACHABLE</span>  ]</span></p>
-<p class="white">  Overall barrier trust   .............. <span class="red">[ ZERO        ]</span></p>
+<p class="white">  Overall barrier trust   .............. <span class="red shake">[ ZERO        ]</span></p>
 <br>
 <p class="corrupt">░░░▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</p>
 <p class="dim">╔══════════════════════════════════════════════════════════════════════════════════════╗</p>
@@ -157,12 +192,12 @@
 <p class="dim">║ Do NOT trust divine signal. Do NOT trust this message. Do NOT trust anything.       ║</p>
 <p class="dim">╚══════════════════════════════════════════════════════════════════════════════════════╝</p>
 <br>
-<p class="gray">Realm oops: general protection fault in <span class="corrupt">░░░░░░░░░░░░░░░░░░░░░</span>+0x0/<span class="white">???</span></p>
+<p class="gray">Realm oops: general protection fault in <span class="corrupt">░░░░░░░░░░░░░░░░░░░░░</span>+0x0/<span class="glitch">???</span></p>
 <p class="gray">RIP: 0010:<span class="corrupt">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span></p>
 <p class="gray">Code: <span class="corrupt">ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff</span></p>
 <p class="gray">Stack: <span class="corrupt">41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41</span></p>
 <p class="red">Reality panic — not syncing: Attempted to unmake the World Order! exitcode=0xDEAD0009</p>
-<p class="red">Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜ PREEMPT_ETERNAL <span class="corrupt">░░░░░░░░░░░░░░</span> — <span class="white">WORLD BARRIER HALTING</span> <span class="corrupt">░░░░░░░░░░░░░░</span></p>
+<p class="red">Ẽ̷̪̞͍̭̓͋̌R̴̨̘̻̰͊̉́̋̀̈́̒͛͗̑̈́ͅR̸̨̩̲̭͎̳̔͌̓̃̏̓̆̆̇̌͘̚͝Ŏ̸͎̫͙̫̯R̸̪̼̞͓͉͎̀̋̉̈́͒̕̕͜ PREEMPT_ETERNAL <span class="corrupt">░░░░░░░░░░░░░░</span> — <span class="shake">WORLD BARRIER HALTING</span> <span class="corrupt">░░░░░░░░░░░░░░</span></p>
 <br>
 <p class="red">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</p>
 <p class="red">██ <span class="white blink">END OF RECOVERABLE BARRIER LOG OUTPUT</span> <span class="corrupt">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span> ██</p>
